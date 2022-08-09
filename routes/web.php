@@ -35,6 +35,7 @@ Route::middleware('checkLoginAdmin')->prefix('admin')->group(function(){
     });
     Route::controller(AdminController::class)->group(function(){
         Route::get('/user-admin', 'index')->name('admin.index');
+        Route::get('/user-admin/show/{id}', 'show')->name('admin.detail');
         Route::get('/user-admin/create', 'create')->name('admin.create');
         Route::post('/user-admin/store', 'store')->name('admin.store');
         Route::get('/user-admin/edit/{id}', 'edit')->name('admin.edit');

@@ -34,6 +34,8 @@
   <script src="{{asset('/access/admin')}}/jsCustom/addressAjax.js"></script>
   <!-- Preview Ajax-->
   <script src="{{asset('/access/admin')}}/jsCustom/previewImage.js"></script>
+  <!-- Error Element-->
+  <script src="{{asset('/access/admin')}}/jsCustom/errorElement.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

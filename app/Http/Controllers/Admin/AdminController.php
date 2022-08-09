@@ -21,20 +21,27 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $admins = AdminModel::all();
-            return DataTables::of($admins)->addColumn('action',function($admin){
-                $routeEdit = route('admin.edit', $admin->id);
-                $routeDelete = route('admin.delete', $admin->id);
-                $deleteAjax = "deleteItemAjax('$routeDelete')";
-                $buttonEdit = '<button class="btn btn-sm btn-success" onclick="window.location.href=\'' . "$routeEdit'\">"
-                              .'<i class="fas fa-pen-alt"></i>'.'</button>';
-                $buttonDelete = '<button class="btn btn-sm btn-danger btn-delete" onclick="' . "$deleteAjax\">"
-                              .' <i class="fas fa-trash"></i>'.'</button>';
-                return $buttonEdit . '    ' . $buttonDelete;
-            })->make(true);          
+            // $admins = AdminModel::all();
+            $admins = AdminModel::get();
+            return DataTables::of($admins)->addColumn('role', function ($admin) {
+                return $admin->role->name;
+            })
+                ->addColumn('action', function ($admin) {
+                    $routeDetail = route('admin.detail', $admin->id);
+                    $routeEdit = route('admin.edit', $admin->id);
+                    $routeDelete = route('admin.delete', $admin->id);
+                    $deleteAjax = "deleteItemAjax('$routeDelete')";
+                    $buttonDetail = '<button class="btn btn-sm btn-warning" onclick="window.location.href=\'' . "$routeDetail'\">"
+                        . '<i class="fas fa-eye"></i>' . '</button>';
+                    $buttonEdit = '<button class="btn btn-sm btn-success" onclick="window.location.href=\'' . "$routeEdit'\">"
+                        . '<i class="fas fa-pen-alt"></i>' . '</button>';
+                    $buttonDelete = '<button class="btn btn-sm btn-danger btn-delete" onclick="' . "$deleteAjax\">"
+                        . ' <i class="fas fa-trash"></i>' . '</button>';
+                    return $buttonDetail . '    ' . $buttonEdit . '    ' . $buttonDelete;
+                })->rawColumns(['role', 'action'])->make(true);
         }
         return view('Admin.Admin.index', [
-            'title'=>self::TITLE
+            'title' => self::TITLE
         ]);
     }
 
@@ -63,11 +70,41 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_role' => 'required',
+            'role' => 'required',
             'name' => 'required|min:5|max:250',
             'email' => 'required|email|unique:tbl_admin',
             'password' => 'required',
-            'phone' => ['required',  new PhoneRule('S')]]);
+            'city' => 'required',
+            'phone' => ['required',  new PhoneRule('Số điện thoại không đúng định dạng!'), 'unique:tbl_admin'],
+            'image' => 'required|image'
+        ], [
+            'required' => 'Trường này không được bỏ trống!',
+            'name.min' => 'Độ dài tối thiểu là 5 ký tự!',
+            'name.max' => 'Độ dài tối đa là 250 ký tự!',
+            'email.email' => 'Email chưa đúng định dạng!',
+            'email.unique' => 'Email đã tồn tại!',
+            'phone.unique' => 'Số điện thoại đã tồn tại!',
+            'image.image' => 'Không đúng định dạng ảnh!'
+        ]);
+        $adminModel = new AdminModel();
+        //Xử lý ảnh
+        $image = $request->image;
+        $nameImage = $image->getClientOriginalName();
+        $folderImage = 'uploads/images/admin/';
+        $newNameImage = $folderImage . 'user-' . time() . '-' . $nameImage;
+        //custom $request
+        $role = $request->role;
+        $md5Password = md5($request->password);
+        $city = $request->city;
+        $request->merge([
+            'id_role' => $role,
+            'password' => $md5Password,
+            'path_image' => $newNameImage,
+            'id_city' => $city
+        ]);
+        $adminModel::create($request->all());
+        $image->move($folderImage, $newNameImage);
+        return 1;
     }
 
     /**
@@ -78,7 +115,15 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = AdminModel::leftJoin('tbl_city', 'tbl_admin.id_city', '=', 'tbl_city.id')
+            ->leftJoin('tbl_district', 'tbl_admin.id_district', '=', 'tbl_district.id')
+            ->leftJoin('tbl_ward', 'tbl_admin.id_ward', '=', 'tbl_ward.id')
+            ->select('tbl_admin.*', 'tbl_city.name as nameCity', 'tbl_district.name as nameDistrict', 'tbl_ward.name as nameWard')
+            ->findOrFail($id);
+        return view('Admin.Admin.detail', [
+            'title' => self::TITLE,
+            'infoUser' => $user
+        ]);
     }
 
     /**
@@ -89,7 +134,15 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = AdminModel::findOrFail($id);
+        $roles = RoleModel::all();
+        $cities = DB::table('tbl_city')->get();
+        return view('Admin.Admin.update', [
+            'title' => self::TITLE,
+            'user' => $user,
+            'roles' => $roles,
+            'cities'  => $cities
+        ]);
     }
 
     /**
@@ -101,7 +154,50 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $adminModel = AdminModel::find($id);
+        $request->validate([
+            'role' => 'required',
+            'name' => 'required|min:5|max:250',
+            'email' => 'required|email|unique:tbl_admin,email,'.$id,
+            'password' => 'required',
+            'city' => 'required',
+            'phone' => ['required',  new PhoneRule('Số điện thoại không đúng định dạng!'), 'unique:tbl_admin,phone,'.$id],
+            'image' => 'image'
+        ], [
+            'required' => 'Trường này không được bỏ trống!',
+            'name.min' => 'Độ dài tối thiểu là 5 ký tự!',
+            'name.max' => 'Độ dài tối đa là 250 ký tự!',
+            'email.email' => 'Email chưa đúng định dạng!',
+            'email.unique' => 'Email đã tồn tại!',
+            'phone.unique' => 'Số điện thoại đã tồn tại!',
+            'image.image' => 'Không đúng định dạng ảnh!'
+        ]);
+        //Xử lý ảnh
+        $newNameImage = $adminModel->path_image;
+        if($request->hasFile('image')){
+            $image = $request->image;
+            $nameImage = $image->getClientOriginalName();
+            $folderImage = 'uploads/images/admin/';
+            $newNameImage = $folderImage . 'user-' . time() . '-' . $nameImage;
+            unlink($adminModel->path_image);
+            $image->move($folderImage, $newNameImage);   
+        }
+        //custom $request
+        $role = $request->role;
+        if($adminModel->password != $request->password){
+            $md5Password = md5($request->password);
+        }else{
+            $md5Password = $request->password;
+        }
+        $city = $request->city;
+        $request->merge([
+            'id_role' => $role,
+            'password' => $md5Password,
+            'path_image' => $newNameImage,
+            'id_city' => $city
+        ]);
+        $adminModel->update($request->all());
+        return 1;
     }
 
     /**
@@ -112,6 +208,16 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = AdminModel::destroy($id);
+        if ($delete) { // xóa thành công
+            $statusCode = 200;
+            $isSuccess = true;
+        } else {
+            $statusCode = 400;
+            $isSuccess = false;
+        }
+
+        // Trả về dữ liệu json và trạng thái kèm theo
+        return response()->json(['isSuccess' => $isSuccess], $statusCode);
     }
 }

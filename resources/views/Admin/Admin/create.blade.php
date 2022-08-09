@@ -37,7 +37,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="role">Role</label>
-                                        <select id="role" name="id_role" class="form-control">
+                                        <select id="role" name="role" class="form-control">
                                             <option value="">--Lựa chọn--</option>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -71,12 +71,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="image">File input</label>
+
                                         <div class="input-group">
-                                            <div class="custom-file">
-                                                <input name="image" type="file" class="custom-file-input"
-                                                    id="image">
-                                                <label class="custom-file-label" for="image">Choose file</label>
-                                            </div>
+
+                                            <input name="image" type="file" class="custom-file-input" id="image">
+                                            <span id="errorImage" class="error invalid-feedback"></span>
+                                            <label class="custom-file-label" for="image">Choose file</label>
+
+
                                         </div>
                                         <div id="preview">
 
@@ -87,7 +89,7 @@
                                             <!-- select -->
                                             <div class="form-group">
                                                 <label for="city">City</label>
-                                                <select id="city" name="id_city" class="form-control">
+                                                <select id="city" name="city" class="form-control">
                                                     <option value="0">--Tỉnh/Thành phố--</option>
                                                     @foreach ($cities as $city)
                                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -149,20 +151,25 @@
                     getWard('{{ route('getWard') }}', this.value, 'ward');
                 })
             });
-            $('#image').change(function(e){
+            $('#image').change(function(e) {
                 preview(e, 'preview');
             })
             $('#adminForm').submit(function() {
                 var formData = new FormData(this);
-                var nameElement = document.getElementById('name');
-                var errorName = document.getElementById('errorName');
+                var errorTagArr = [
+                    'role',
+                    'name',
+                    'password',
+                    'email',
+                    'city',
+                    'phone',
+                    'image'
+                ];
                 var errors = getAjax("{{ route('admin.store') }}", formData);
                 if (errors) {
-                    nameElement.classList.add('is-invalid');
-                    errorName.innerHTML = errors['name'];
+                    setError(errorTagArr, errors);
                 } else {
-                    nameElement.classList.remove('is-invalid');
-                    document.getElementById('roleForm').reset();
+                    removeError(errorTagArr);
                 }
             })
         });

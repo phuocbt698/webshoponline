@@ -37,11 +37,9 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>ID</th>
+                  <th>Role</th>
+                  <th>Email</th>
+                  <th>Phone</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -83,14 +81,11 @@
         var columns = [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
-            { data: 'id_role', name: 'role' },
-            { data: 'path_image', name: 'image' },
+            { data: 'role', name: 'role' },
             { data: 'email', name: 'email' },
             { data: 'phone', name: 'phone' },
-            { data: 'id_city', name: 'city' },
             { data: 'action', name: 'action'}
         ];
-        
         getDataTable(elementID, route, columns);
     })
 </script>
