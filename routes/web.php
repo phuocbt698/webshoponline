@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RolerController;
 use App\Http\Controllers\LoginController;
@@ -46,6 +47,14 @@ Route::middleware('checkLoginAdmin')->prefix('admin')->group(function(){
         Route::get('/user-admin/edit/{id}', 'edit')->name('admin.edit');
         Route::put('/user-admin/update/{id}', 'update')->name('admin.update');
         Route::delete('/user-admin/delete/{id}', 'destroy')->name('admin.delete');
+    });
+    Route::controller(CategoryController::class)->group(function(){
+        Route::get('/category', 'index')->name('category.index');
+        Route::get('/category/create', 'create')->name('category.create');
+        Route::post('/category/store', 'store')->name('category.store');
+        Route::get('/category/edit/{id}', 'edit')->name('category.edit');
+        Route::put('/category/update/{id}', 'update')->name('category.update');
+        Route::delete('/category/delete/{id}', 'destroy')->name('category.delete');
     });
 });
 
