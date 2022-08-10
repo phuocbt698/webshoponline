@@ -1,5 +1,5 @@
 var element = '';
-function sendAjax(url, data, method = 'POST'){
+function sendAjax(url, data, method = 'POST') {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -16,18 +16,41 @@ function sendAjax(url, data, method = 'POST'){
     });
 }
 
-function getAjax(url, data, method = 'POST'){
+function getAjax(url, data, method = 'POST') {
     var ajax = sendAjax(url, data, method = 'POST');
     ajax = JSON.parse(ajax.responseText);
-    if(ajax == 1){
+    if (ajax == 1) {
         toastSuccess('mới được thêm');
-    }else{
+    } else {
         toastError('được thêm');
         return ajax.errors;
     }
 }
 
-function getDataTable(elementID, url, columns = []){
+function ajaxLogin(url, data, method = 'POST') {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var ajax = $.ajax({
+        url: url,
+        data: data,
+        method: method,
+        processData: false,
+        contentType: false,
+        async: false,
+        typeData: 'json'
+    });
+    ajaxJson = JSON.parse(ajax.responseText);
+    if (ajaxJson.success) {
+        return ajaxJson.success;
+    } else {
+        return ajaxJson.errors;
+    }
+}
+
+function getDataTable(elementID, url, columns = []) {
 
     $('#' + elementID).DataTable({
         "paging": true,
@@ -46,15 +69,15 @@ function getDataTable(elementID, url, columns = []){
     return element = elementID;
 }
 
-function deleteItemAjax(url){
+function deleteItemAjax(url) {
     var confirm = window.confirm('Bạn có muốn xóa dòng dữ liệu này! Sau khi xóa dữ liệu không thể khôi phục lại! Cẩn thận!');
-    if(confirm){
+    if (confirm) {
         var ajax = sendAjax(url, '', 'DELETE');
         ajax = JSON.parse(ajax.status);
-        if(ajax == 200){
+        if (ajax == 200) {
             toastSuccess('đã được xóa');
             $('#' + element).DataTable().clear().draw();
-        }else{
+        } else {
             toastError('được xóa');
         }
     }

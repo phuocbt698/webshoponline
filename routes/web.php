@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RolerController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::controller(LoginController::class)->group(function(){
+    Route::get('/admin/login', 'index')->name('login.index');
+    Route::post('/admin/login/login', 'login')->name('login.login');
+    Route::get('/admin/logout', 'logout')->name('login.logout');
+});
 Route::middleware('checkLoginAdmin')->prefix('admin')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/', 'index')->name('dashboard.index');

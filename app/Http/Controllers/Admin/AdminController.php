@@ -94,11 +94,11 @@ class AdminController extends Controller
         $newNameImage = $folderImage . 'user-' . time() . '-' . $nameImage;
         //custom $request
         $role = $request->role;
-        $md5Password = md5($request->password);
+        $bcryptPassword = bcrypt($request->password);
         $city = $request->city;
         $request->merge([
             'id_role' => $role,
-            'password' => $md5Password,
+            'password' => $bcryptPassword,
             'path_image' => $newNameImage,
             'id_city' => $city
         ]);
