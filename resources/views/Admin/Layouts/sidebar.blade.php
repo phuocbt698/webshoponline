@@ -21,7 +21,7 @@
               <li class="nav-item">
                 <a href="{{route('attribute.index')}}" class="nav-link {{ (!empty($active) && $active == 'Attribute') ? 'active' : '' }}">
                     <i class="fas fa-info-circle"></i>
-                  <p>Product Attribute</p>
+                  <p>Attribute</p>
                 </a>
               </li>
               <li class="nav-item">

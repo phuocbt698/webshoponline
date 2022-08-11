@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AttributeModel;
 use App\Models\Admin\CategoryModel;
 use App\Models\Admin\ProductModel;
 use Illuminate\Http\Request;
@@ -53,10 +54,12 @@ class ProductController extends Controller
     public function create()
     {
         $categories = CategoryModel::all();
+        $attributes = AttributeModel::all();
         return view('Admin.Product.create', [
             'title' => self::TITLE,
             'active' => self::ACTIVE,
-            'categories' => $categories
+            'categories' => $categories,
+            'attributes' => $attributes
         ]);
     }
 
@@ -68,6 +71,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $request->validate([
             'category' => 'required',
             'name' => 'required|min:5|max:250',

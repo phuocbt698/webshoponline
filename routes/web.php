@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RolerController;
+use App\Http\Controllers\Admin\ValueController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +76,13 @@ Route::middleware('checkLoginAdmin')->prefix('admin')->group(function(){
         Route::get('/attribute/edit/{id}', 'edit')->name('attribute.edit');
         Route::put('/attribute/update/{id}', 'update')->name('attribute.update');
         Route::delete('/attribute/delete/{id}', 'destroy')->name('attribute.delete');
+    });
+    Route::controller(ValueController::class)->group(function(){
+        Route::get('/value', 'index')->name('value.index');
+        Route::get('/value/edit/{id}', 'edit')->name('value.edit');
+        Route::post('/value/update/{id}', 'update')->name('value.update');
+        Route::post('/value/store', 'store')->name('value.store');
+        Route::delete('/value/delete/{id}', 'destroy')->name('value.delete');
     });
     Route::controller(CustomerController::class)->group(function(){
         Route::get('/customer', 'index')->name('customer.index');

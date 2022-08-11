@@ -39,7 +39,7 @@
   {{-- CKEditor CDN --}}
   <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
   <style>
-    .ck-editor__editable {min-height: 400px;},
+    .ck-editor__editable {min-height: 300px;},
   </style>
   <style>
     #tab-content-description img{

@@ -21,14 +21,17 @@ class AttributeController extends Controller
         if ($request->ajax()) {
             $attributes = AttributeModel::all();
             return DataTables::of($attributes)->addColumn('action',function($attribute){
+                $routeDetail = route('attribute.detail', $attribute->id);
                 $routeEdit = route('attribute.edit', $attribute->id);
                 $routeDelete = route('attribute.delete', $attribute->id);
                 $deleteAjax = "deleteItemAjax('$routeDelete')";
+                $buttonDetail = '<button class="btn btn-sm btn-warning" onclick="window.location.href=\'' . "$routeDetail'\">"
+                        . '<i class="fas fa-eye"></i>' . '</button>';
                 $buttonEdit = '<button class="btn btn-sm btn-success" onclick="window.location.href=\'' . "$routeEdit'\">"
                               .'<i class="fas fa-pen-alt"></i>'.'</button>';
                 $buttonDelete = '<button class="btn btn-sm btn-danger btn-delete" onclick="' . "$deleteAjax\">"
                               .' <i class="fas fa-trash"></i>'.'</button>';
-                return $buttonEdit . '    ' . $buttonDelete;
+                return $buttonDetail . '    ' . $buttonEdit . '    ' . $buttonDelete;
             })->make(true);          
         }
         return view('Admin.attribute.index', [
@@ -79,7 +82,12 @@ class AttributeController extends Controller
      */
     public function show($id)
     {
-        //
+        $attribute = AttributeModel::findOrFail($id);
+        return view('Admin.Attribute.detail', [
+            'title' => self::TITLE,
+            'active' => self::ACTIVE,
+            'infoAttribute' => $attribute
+        ]);
     }
 
     /**

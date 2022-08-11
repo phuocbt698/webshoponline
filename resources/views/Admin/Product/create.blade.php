@@ -88,8 +88,6 @@
                         <!--/.col (left) -->
                         <!-- right column -->
                         <div class="col-md-8">
-
-
                             <div class="card">
                                 <a href="{{ route('product.index') }}" class="btn btn-info">
                                     <i class="fas fa-list"></i>
@@ -97,8 +95,29 @@
                                 </a>
                             </div>
 
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">Specifications</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <!-- checkbox -->
+                                            <div class="form-group d-flex flex-row justify-content-around">
+                                                @foreach ($attributes as $attribute)
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox"
+                                                            id="{{$attribute->id}}" name="{{$attribute->id}}" value="option1">
+                                                        <label for="{{$attribute->id}}" class="custom-control-label">{{$attribute->name}}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <!-- Form Element sizes -->
+                            </div>
                             <div class="card card-success">
                                 <div class="card-header">
                                     <h3 class="card-title">Description</h3>
@@ -108,15 +127,17 @@
                                         rows="10"></textarea>
                                     <span id="errorDescription" class="error invalid-feedback"></span>
                                 </div>
-
                                 <!-- /.card-body -->
                             </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!--/.col (right) -->
+                        <!-- Form Element sizes -->
+
                     </div>
+                    <!--/.col (right) -->
                 </form>
                 <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div> <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
     </div>
