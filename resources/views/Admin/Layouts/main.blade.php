@@ -36,6 +36,16 @@
   <script src="{{asset('/access/admin')}}/jsCustom/previewImage.js"></script>
   <!-- Error Element-->
   <script src="{{asset('/access/admin')}}/jsCustom/errorElement.js"></script>
+  {{-- CKEditor CDN --}}
+  <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+  <style>
+    .ck-editor__editable {min-height: 400px;},
+  </style>
+  <style>
+    #tab-content-description img{
+      width: 100%;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -52,10 +62,10 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset('/access/admin')}}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{asset(Auth::guard('admin')->user()->path_image)}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="{{route('admin.detail', Auth::guard('admin')->user()->id)}}" class="d-block">{{Auth::guard('admin')->user()->name}}</a>
         </div>
       </div>
 

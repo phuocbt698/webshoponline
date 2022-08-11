@@ -103,6 +103,25 @@ return new class extends Migration
                     ->references('id')
                     ->on('tbl_product');
         });
+
+        Schema::create('tbl_attribute', function(Blueprint $table){
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+        Schema::create('tbl_attribute_value', function(Blueprint $table){
+            $table->increments('id');
+            $table->increments('id_attribute');
+            $table->increments('id_product');
+            $table->string('value');
+            $table->timestamps();
+            $table->foreign('id_attribute')
+                    ->references('id')
+                    ->on('tbl_attribute');
+            $table->foreign('id_product')
+                    ->references('id')
+                    ->on('tbl_product');
+        });
     }
 
     /**
@@ -119,5 +138,7 @@ return new class extends Migration
         Schema::drop('tbl_role');
         Schema::drop('tbl_product');
         Schema::drop('tbl_category');
+        Schema::drop('tbl_attribute');
+        Schema::drop('tbl_attribute_value');
     }
 };

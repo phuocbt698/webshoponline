@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RolerController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +57,48 @@ Route::middleware('checkLoginAdmin')->prefix('admin')->group(function(){
         Route::get('/category/edit/{id}', 'edit')->name('category.edit');
         Route::put('/category/update/{id}', 'update')->name('category.update');
         Route::delete('/category/delete/{id}', 'destroy')->name('category.delete');
+    });
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('/product', 'index')->name('product.index');
+        Route::get('/product/create', 'create')->name('product.create');
+        Route::get('/product/show/{id}', 'show')->name('product.detail');
+        Route::post('/product/store', 'store')->name('product.store');
+        Route::get('/product/edit/{id}', 'edit')->name('product.edit');
+        Route::put('/product/update/{id}', 'update')->name('product.update');
+        Route::delete('/product/delete/{id}', 'destroy')->name('product.delete');
+    });
+    Route::controller(AttributeController::class)->group(function(){
+        Route::get('/attribute', 'index')->name('attribute.index');
+        Route::get('/attribute/create', 'create')->name('attribute.create');
+        Route::get('/attribute/show/{id}', 'show')->name('attribute.detail');
+        Route::post('/attribute/store', 'store')->name('attribute.store');
+        Route::get('/attribute/edit/{id}', 'edit')->name('attribute.edit');
+        Route::put('/attribute/update/{id}', 'update')->name('attribute.update');
+        Route::delete('/attribute/delete/{id}', 'destroy')->name('attribute.delete');
+    });
+    Route::controller(CustomerController::class)->group(function(){
+        Route::get('/customer', 'index')->name('customer.index');
+        Route::get('/customer/create', 'create')->name('customer.create');
+        Route::post('/customer/store', 'store')->name('customer.store');
+        Route::get('/customer/edit/{id}', 'edit')->name('customer.edit');
+        Route::put('/customer/update/{id}', 'update')->name('customer.update');
+        Route::delete('/customer/delete/{id}', 'destroy')->name('customer.delete');
+    });
+    Route::controller(OrderController::class)->group(function(){
+        Route::get('/order', 'index')->name('order.index');
+        Route::get('/order/create', 'create')->name('order.create');
+        Route::post('/order/store', 'store')->name('order.store');
+        Route::get('/order/edit/{id}', 'edit')->name('order.edit');
+        Route::put('/order/update/{id}', 'update')->name('order.update');
+        Route::delete('/order/delete/{id}', 'destroy')->name('order.delete');
+    });
+    Route::controller(OrderDetailController::class)->group(function(){
+        Route::get('/order-detail', 'index')->name('orderDetail.index');
+        Route::get('/order-detail/create', 'create')->name('orderDetail.create');
+        Route::post('/order-detail/store', 'store')->name('orderDetail.store');
+        Route::get('/order-detail/edit/{id}', 'edit')->name('orderDetail.edit');
+        Route::put('/order-detail/update/{id}', 'update')->name('orderDetail.update');
+        Route::delete('/order-detail/delete/{id}', 'destroy')->name('orderDetail.delete');
     });
 });
 

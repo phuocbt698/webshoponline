@@ -9,6 +9,29 @@
                  <p>Category</p>
              </a>
          </li>
+         <li class="nav-item {{ $title == 'Product' ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link  {{ $title == 'Product' ? 'active' : '' }}">
+                <i class="fab fa-product-hunt"></i>
+              <p>
+                Product
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('attribute.index')}}" class="nav-link {{ (!empty($active) && $active == 'Attribute') ? 'active' : '' }}">
+                    <i class="fas fa-info-circle"></i>
+                  <p>Product Attribute</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('product.index') }}" class="nav-link  {{ (!empty($active) && $active == 'Product') ? 'active' : '' }}">
+                    <i class="fas fa-list-alt"></i>
+                    <p>Product list</p>
+                </a>
+            </li>
+            </ul>
+          </li>
          <li class="nav-item">
              <a href="{{ route('admin.index') }}" class="nav-link {{ $title == 'User-admin' ? 'active' : '' }}">
                  <i class="fas fa-user-shield"></i>
