@@ -4,34 +4,29 @@
          <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
          <li class="nav-item">
+             <a href="{{ route('dashboard.index') }}" class="nav-link {{ $title == 'Dashboard' ? 'active' : '' }}">
+                <i class="fas fa-tachometer-alt"></i>
+                 <p>Dashboard</p>
+             </a>
+         </li>
+         <li class="nav-item">
+            <a href="{{ route('slide.index') }}" class="nav-link {{ $title == 'Slide' ? 'active' : '' }}">
+                <i class="fas fa-ad"></i>
+                <p>Slide</p>
+            </a>
+        </li>
+         <li class="nav-item">
              <a href="{{ route('category.index') }}" class="nav-link {{ $title == 'Category' ? 'active' : '' }}">
                  <i class="fas fa-th-list"></i>
                  <p>Category</p>
              </a>
          </li>
-         <li class="nav-item {{ $title == 'Product' ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link  {{ $title == 'Product' ? 'active' : '' }}">
-                <i class="fab fa-product-hunt"></i>
-              <p>
-                Product
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('attribute.index')}}" class="nav-link {{ (!empty($active) && $active == 'Attribute') ? 'active' : '' }}">
-                    <i class="fas fa-info-circle"></i>
-                  <p>Attribute</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('product.index') }}" class="nav-link  {{ (!empty($active) && $active == 'Product') ? 'active' : '' }}">
-                    <i class="fas fa-list-alt"></i>
-                    <p>Product list</p>
-                </a>
-            </li>
-            </ul>
-          </li>
+         <li class="nav-item">
+             <a href="{{ route('product.index') }}" class="nav-link  {{ $title == 'Product' ? 'active' : '' }}">
+                 <i class="fab fa-product-hunt"></i>
+                 <p>Product</p>
+             </a>
+         </li>
          <li class="nav-item">
              <a href="{{ route('admin.index') }}" class="nav-link {{ $title == 'User-admin' ? 'active' : '' }}">
                  <i class="fas fa-user-shield"></i>

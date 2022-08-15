@@ -22,9 +22,15 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <div class="mb-2 d-flex justify-content-end">
+          <a href="{{route('slide.index')}}" class="btn btn-success">
+            <i class="fas fa-list"></i>
+            <span>Danh sách</span>
+          </a>
+        </div>
         <div class="row">
           <div class="col-md-5">
-
+            
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
@@ -34,9 +40,9 @@
                        alt="Product image">
                 </div>
 
-                <h3 class="profile-username text-center">{{$infoProduct->name}}</h3>
+                <h3 class="profile-username text-center"><b>{{$infoProduct->name}}</b></h3>
 
-                <p class="text-muted text-center">Danh mục: {{$infoProduct->category->name}}</p>
+                <p class="text-muted text-center"><b>Danh mục:</b> {{$infoProduct->category->name}}</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">

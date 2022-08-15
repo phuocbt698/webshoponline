@@ -103,34 +103,16 @@ return new class extends Migration
                     ->references('id')
                     ->on('tbl_product');
         });
+        Schema::create('tbl_slide', function(Blueprint $table){
+            $table->increments('id');
+            $table->string('title');
+            $table->string('content');
+            $table->string('path_image');
+            $table->timestamp('time_start')->nullable();
+            $table->timestamp('time_end')->nullable();
+            $table->timestamps();
+        });
 
-        Schema::create('tbl_attribute', function(Blueprint $table){
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
-        });
-        Schema::create('tbl_attribute_value', function(Blueprint $table){
-            $table->increments('id');
-            $table->unsignedInteger('id_attribute');
-            $table->unsignedInteger('id_product');
-            $table->string('value');
-            $table->timestamps();
-            $table->foreign('id_attribute')
-                    ->references('id')
-                    ->on('tbl_attribute');
-            $table->foreign('id_product')
-                    ->references('id')
-                    ->on('tbl_product');
-        });
-        Schema::create('tbl_value_attribute', function(Blueprint $table){
-            $table->increments('id');
-            $table->unsignedInteger('id_attribute')->nullable();
-            $table->string('value');
-            $table->timestamps();
-            $table->foreign('id_attribute')
-                    ->references('id')
-                    ->on('tbl_attribute');
-        });
     }
 
     /**
@@ -147,8 +129,6 @@ return new class extends Migration
         Schema::drop('tbl_role');
         Schema::drop('tbl_product');
         Schema::drop('tbl_category');
-        Schema::drop('tbl_attribute');
-        Schema::drop('tbl_attribute_value');
-        Schema::drop('tbl_value_attribute');
+        Schema::drop('tbl_slide');
     }
 };

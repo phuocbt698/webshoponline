@@ -12,7 +12,6 @@ use Yajra\DataTables\DataTables;
 class ProductController extends Controller
 {
     const TITLE = 'Product';
-    const ACTIVE = 'Product';
     /**
      * Display a listing of the resource.
      *
@@ -41,8 +40,7 @@ class ProductController extends Controller
                 })->rawColumns(['category', 'action'])->make(true);
         }
         return view('Admin.Product.index', [
-            'title' => self::TITLE,
-            'active' => self::ACTIVE,
+            'title' => self::TITLE
         ]);
     }
 
@@ -54,12 +52,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = CategoryModel::all();
-        $attributes = AttributeModel::all();
         return view('Admin.Product.create', [
             'title' => self::TITLE,
-            'active' => self::ACTIVE,
-            'categories' => $categories,
-            'attributes' => $attributes
+            'categories' => $categories
         ]);
     }
 
@@ -71,7 +66,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $request->validate([
             'category' => 'required',
             'name' => 'required|min:5|max:250',
@@ -114,7 +108,6 @@ class ProductController extends Controller
         $product = ProductModel::findOrFail($id);
         return view('Admin.Product.detail', [
             'title' => self::TITLE,
-            'active' => self::ACTIVE,
             'infoProduct' => $product
         ]);
     }

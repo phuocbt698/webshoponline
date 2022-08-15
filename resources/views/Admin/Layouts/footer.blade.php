@@ -1,6 +1,21 @@
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
+      <b>June13</b>
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <div>
+      <a href="https://www.facebook.com/phuocbt698" class="mr-2">
+        <i class="fab fa-facebook"></i>
+        <strong>BÙI THẾ PHƯỚC</strong>
+      </a>
+      <a href="https://github.com/phuocbt698">
+        <i class="fab fa-github"></i>
+        <strong>BÙI THẾ PHƯỚC</strong>
+      </a>
+    </div>
+   
   </footer>
+  @if (Session::has('messeage'))
+  <script>
+      toastMessage('{{Session::get('messeage')}}');
+  </script>
+  @endif

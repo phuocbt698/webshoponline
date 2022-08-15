@@ -13,6 +13,11 @@ function sendAddressAjax(url, id){
     });
 }
 
+function getValue(url, id){
+    var resultAjax = sendAddressAjax(url, id);
+    return  resultAjax.responseJSON;
+}
+
 function getDistrict(url, id, elementDistrictId){
     var element = $('#' + elementDistrictId).html("");
     if(id != 0){

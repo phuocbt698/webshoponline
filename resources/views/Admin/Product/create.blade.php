@@ -94,30 +94,6 @@
                                     <span>Danh sách</span>
                                 </a>
                             </div>
-
-                            <div class="card card-warning">
-                                <div class="card-header">
-                                    <h3 class="card-title">Specifications</h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <!-- checkbox -->
-                                            <div class="form-group d-flex flex-row justify-content-around">
-                                                @foreach ($attributes as $attribute)
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input class="custom-control-input" type="checkbox"
-                                                            id="{{$attribute->id}}" name="{{$attribute->id}}" value="option1">
-                                                        <label for="{{$attribute->id}}" class="custom-control-label">{{$attribute->name}}</label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                             <div class="card card-success">
                                 <div class="card-header">
                                     <h3 class="card-title">Description</h3>
@@ -153,7 +129,7 @@
         $(document).ready(function() {
             $('#image').change(function(e) {
                 preview(e, 'preview');
-            })
+            });
             $('#productForm').submit(function() {
                 var formData = new FormData(this);
                 var errorTagArr = [
@@ -170,7 +146,7 @@
                 } else {
                     removeError(errorTagArr);
                 }
-            })
+            });
         });
     </script>
 @endsection
