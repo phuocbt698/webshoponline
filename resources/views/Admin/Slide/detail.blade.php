@@ -51,7 +51,7 @@
                   </li>
                 </ul>
 
-                <a href="{{route('product.index')}}" class="btn btn-primary btn-block"><b>Danh sách</b></a>
+                <a href="{{route('slide.index')}}" class="btn btn-primary btn-block"><b>Danh sách</b></a>
               </div>
               <!-- /.card-body -->
             </div>

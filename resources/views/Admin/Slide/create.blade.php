@@ -90,6 +90,14 @@
         <!-- /.content -->
     </div>
     <script>
+        ClassicEditor
+            .create(document.querySelector('#content'))
+            .then(editor => {})
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
         $(document).ready(function() {
             $('#image').change(function(e) {
                 preview(e, 'preview');

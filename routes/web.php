@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RolerController;
 use App\Http\Controllers\Admin\SlideController;
+use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('Customer.homepage');
-});
+/* 
+**
+** Route Customer
+**
+*/
+
+
+
+
+
+/* 
+**
+** Route Admin
+**
+*/
 Route::controller(LoginController::class)->group(function(){
     Route::get('/admin/login', 'index')->name('login.index');
     Route::post('/admin/login/login', 'login')->name('login.login');
@@ -119,6 +132,12 @@ Route::middleware('checkLoginAdmin')->prefix('admin')->group(function(){
     });
 });
 
+
+/* 
+**
+** Route Public
+**
+*/
 Route::controller(AddressController::class)->group(function(){
     Route::post('/address/get-ciy', 'getCity')->name('getCity');
     Route::post('/address/get-district', 'getDistrict')->name('getDistrict');
